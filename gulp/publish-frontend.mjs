@@ -18,7 +18,7 @@ import { CloudFrontClient, CreateInvalidationCommand } from '@aws-sdk/client-clo
 
 const clean = () => deleteAsync(['./dist**']);
 
-const cloudfront = new CloudFrontClient({ region: 'us-east-1' });
+const cloudfront = new CloudFrontClient({ region: 'us-east-2' });
 
 const RESOURCES_PATH = './dist/resources';
 
@@ -79,13 +79,9 @@ const mjsSources = [
 	'server/scripts/modules/almanac.mjs',
 	'server/scripts/modules/icons.mjs',
 	'server/scripts/modules/extendedforecast.mjs',
-	'server/scripts/modules/hourly.mjs',
-	'server/scripts/modules/hourly-graph.mjs',
 	'server/scripts/modules/latestobservations.mjs',
 	'server/scripts/modules/localforecast.mjs',
-	'server/scripts/modules/radar.mjs',
 	'server/scripts/modules/regionalforecast.mjs',
-	'server/scripts/modules/travelforecast.mjs',
 	'server/scripts/modules/progress.mjs',
 	'server/scripts/index.mjs',
 ];
@@ -128,7 +124,7 @@ const copyOtherFiles = () => src(otherFiles, { base: 'server/' })
 const s3 = s3Upload({
 	useIAM: true,
 }, {
-	region: 'us-east-1',
+	region: 'us-east-2',
 });
 const uploadSources = [
 	'dist/**',
@@ -159,7 +155,7 @@ const uploadImages = () => src(imageSources, { base: './server', encoding: false
 	);
 
 const invalidate = () => cloudfront.send(new CreateInvalidationCommand({
-	DistributionId: 'E9171A4KV8KCW',
+	DistributionId: 'E3CXPXY0XH4VUO',
 	InvalidationBatch: {
 		CallerReference: (new Date()).toLocaleString(),
 		Paths: {
@@ -173,6 +169,6 @@ const buildDist = series(clean, parallel(buildJs, compressJsData, compressJsVend
 
 // upload_images could be in parallel with upload, but _images logs a lot and has little changes
 // by running upload last the majority of the changes will be at the bottom of the log for easy viewing
-const publishFrontend = series(buildDist, uploadImages,	upload,	invalidate);
+const publishFrontend = series(buildDist, uploadImages, upload, invalidate);
 
 export default publishFrontend;
