@@ -72,21 +72,6 @@
 			top: 40px;
 		}
 
-		.date-time {
-			white-space: pre;
-			color: c.$date-time;
-			font-family: 'Star3000 Small';
-			font-size: 24pt;
-			@include u.text-shadow(3px, 1.5px);
-			left: 415px;
-			width: 170px;
-			text-align: right;
-			position: absolute;
-
-			&.date {
-				padding-top: 22px;
-			}
-		}
 	}
 
 	.main {
@@ -103,9 +88,9 @@
 		}
 
 		&.has-box {
-			margin-left: 64px;
-			margin-right: 64px;
-			width: calc(100% - 128px);
+			margin-left: 25px;
+			margin-right: 25px;
+			width: calc(100% - 50px);
 		}
 
 	}
@@ -116,12 +101,44 @@
 		width: 640px;
 		height: 70px;
 		overflow: hidden;
-		margin-top: 10px;
+		margin-top: 5px;
 
 		.fixed {
 			font-family: 'Star3000';
 			font-size: 24pt;
-			margin-left: 55px;
+			margin-left: 25px;
+		}
+
+		.date-time {
+			color: c.$date-time;
+			font-family: 'Star3000 Small';
+			font-size: 24pt;
+			height: 18px;
+			position: relative;
+
+			&.date,
+			&.time {
+				top: -10px;
+			}
+
+			&.date {
+				float: left;
+				text-align: left;
+				margin-left: 25px;
+			}
+
+			&.time {
+				float: right;
+				text-align: right;
+				margin-right: 25px;
+			}
+
+			&.time::after {
+				content: "";
+				clear: both;
+				display: table;
+			}
+
 		}
 	}
 }
