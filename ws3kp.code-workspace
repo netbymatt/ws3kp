@@ -1,0 +1,62 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"search.exclude": {
+			"**/*.code-search": true,
+			"**/*.css": true,
+			"**/*.min.js": true,
+			"**/bower_components": true,
+			"**/node_modules": true,
+			"**/vendor": true,
+			"dist/**": true
+		},
+		"cSpell.enabled": true,
+		"cSpell.words": [
+			"'storm",
+			"arcgis",
+			"Battaglia",
+			"devbridge",
+			"gifs",
+			"ltrim",
+			"Noaa",
+			"nosleep",
+			"Pngs",
+			"PRECIP",
+			"rtrim",
+			"sonarjs",
+			"T",
+			"T'storm",
+			"uscomp",
+			"Visib",
+			"Waukegan"
+		],
+		"cSpell.ignorePaths": [
+			"**/package-lock.json",
+			"**/node_modules/**",
+			"**/vscode-extension/**",
+			"**/.git/objects/**",
+			".vscode",
+			".vscode-insiders",
+			"**/vendor/auto/**",
+			"**/twc3.js",
+		],
+		"editor.tabSize": 2,
+		"emmet.includeLanguages": {
+			"ejs": "html",
+		},
+		"[html]": {
+			"editor.defaultFormatter": "j69.ejs-beautify"
+		},
+		"files.exclude": {},
+		"files.eol": "\n",
+		"editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+			"source.fixAll.eslint": "explicit"
+		}
+
+	},
+}

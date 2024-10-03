@@ -1,0 +1,12 @@
+{
+	"name": "WeatherStar 3000+",
+	"icons": [
+		{
+			"src": "/images/Logo192.png",
+			"sizes": "192x192",
+			"type": "images/png"
+		}
+	],
+	"start_url": "/",
+	"display": "standalone"
+}
