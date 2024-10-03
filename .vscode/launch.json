@@ -35,15 +35,6 @@
 			"type": "node"
 		},
 		{
-			"name": "Data:travelcities",
-			"program": "${workspaceFolder}/datagenerators/travelcities.js",
-			"request": "launch",
-			"skipFiles": [
-				"<node_internals>/**"
-			],
-			"type": "node"
-		},
-		{
 			"type": "node",
 			"request": "launch",
 			"name": "Server",
