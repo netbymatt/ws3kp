@@ -1,13 +1,19 @@
-<%- include('header.ejs', {titleDual:{ top: 'Regional' , bottom: 'Observations' }, hasTime: true }) %>
-	<div class="main has-scroll regional-forecast">
-		<div class="map"><img src="images/Basemap2.png" /></div>
-		<div class="location-container">
-			<div class="location template">
-				<div class="icon">
-					<img src="" />
+<%- include('header.ejs', {titleTall: true, title: 'Forecast Across The Region' , hasTime: true }) %>
+	<div class="main has-scroll regional-forecast has-box">
+		<div class="container">
+			<div class="column-headers">
+				<div class="location">City</div>
+				<div class="weather">Weather</div>
+				<div class="temp-low">Low</div>
+				<div class="temp-high">Hi</div>
+			</div>
+			<div class="forecast-lines">
+				<div class="forecast-row template">
+					<div class="location"></div>
+					<div class="weather"></div>
+					<div class="temp-low"></div>
+					<div class="temp-high"></div>
 				</div>
-				<div class="city"></div>
-				<div class="temp"></div>
 			</div>
 		</div>
 	</div>

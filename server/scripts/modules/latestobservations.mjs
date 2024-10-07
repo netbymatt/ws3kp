@@ -2,7 +2,7 @@
 import { distance as calcDistance, directionToNSEW } from './utils/calc.mjs';
 import { json } from './utils/fetch.mjs';
 import STATUS from './status.mjs';
-import { locationCleanup } from './utils/string.mjs';
+import { locationCleanup, shortenCurrentConditions } from './utils/string.mjs';
 import { celsiusToFahrenheit, kphToMph } from './utils/units.mjs';
 import WeatherDisplay from './weatherdisplay.mjs';
 import { registerDisplay } from './navigation.mjs';
@@ -70,7 +70,7 @@ class LatestObservations extends WeatherDisplay {
 		const lines = sortedConditions.map((condition) => {
 			const windDirection = directionToNSEW(condition.windDirection.value);
 
-			const	Temperature = Math.round(celsiusToFahrenheit(condition.temperature.value));
+			const Temperature = Math.round(celsiusToFahrenheit(condition.temperature.value));
 			const WindSpeed = Math.round(kphToMph(condition.windSpeed.value));
 
 			const fill = {
@@ -97,33 +97,14 @@ class LatestObservations extends WeatherDisplay {
 		this.finishDraw();
 	}
 }
-const shortenCurrentConditions = (_condition) => {
-	let condition = _condition;
-	condition = condition.replace(/Light/, 'L');
-	condition = condition.replace(/Heavy/, 'H');
-	condition = condition.replace(/Partly/, 'P');
-	condition = condition.replace(/Mostly/, 'M');
-	condition = condition.replace(/Few/, 'F');
-	condition = condition.replace(/Thunderstorm/, 'T\'storm');
-	condition = condition.replace(/ in /, '');
-	condition = condition.replace(/Vicinity/, '');
-	condition = condition.replace(/ and /, ' ');
-	condition = condition.replace(/Freezing Rain/, 'Frz Rn');
-	condition = condition.replace(/Freezing/, 'Frz');
-	condition = condition.replace(/Unknown Precip/, '');
-	condition = condition.replace(/L Snow Fog/, 'L Snw/Fog');
-	condition = condition.replace(/ with /, '/');
-	return condition;
-};
-
 const getStations = async (stations) => {
 	const stationData = await Promise.all(stations.map(async (station) => {
 		try {
 			const data = await json(`https://api.weather.gov/stations/${station.id}/observations/latest`, { retryCount: 1, stillWaiting: () => this.stillWaiting() });
 			// test for temperature, weather and wind values present
 			if (data.properties.temperature.value === null
-			|| data.properties.textDescription === ''
-			|| data.properties.windSpeed.value === null) return false;
+				|| data.properties.textDescription === ''
+				|| data.properties.windSpeed.value === null) return false;
 			// format the return values
 			return {
 				...data.properties,
