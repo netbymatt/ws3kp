@@ -17,6 +17,11 @@ class LocalForecast extends WeatherDisplay {
 		if (!super.getData(_weatherParameters)) return;
 		const weatherParameters = _weatherParameters ?? this.weatherParameters;
 
+		// get title
+		if (!this.originalTitle) {
+			this.originalTitle = this.elem.querySelector('.header .title.single').textContent;
+		}
+
 		// get raw data
 		const rawData = await this.getRawData(weatherParameters);
 		// check for data
@@ -50,6 +55,9 @@ class LocalForecast extends WeatherDisplay {
 			forecast.style.height = `${newHeight}px`;
 		});
 
+		// update the title
+		this.elem.querySelector('.header .title.single').textContent = `${this.originalTitle} -- Zone ${weatherParameters.zoneId}`;
+
 		this.timing.totalScreens = forecastsElem.scrollHeight / this.pageHeight;
 		this.calcNavTiming();
 		this.setStatus(STATUS.loaded);
@@ -76,6 +84,14 @@ class LocalForecast extends WeatherDisplay {
 
 	async drawCanvas() {
 		super.drawCanvas();
+
+		// update the title
+		const titleElem = this.elem.querySelector('.header .title.single');
+		if (this.screenIndex === 0) {
+			titleElem.textContent = `${this.originalTitle} -- Zone ${this.weatherParameters.zoneId}`;
+		} else {
+			titleElem.textContent = 'Nat\'l Weather Service Forecast';
+		}
 
 		const top = -this.screenIndex * this.pageHeight;
 		this.elem.querySelector('.forecasts').style.top = `${top}px`;

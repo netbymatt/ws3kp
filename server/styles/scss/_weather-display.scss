@@ -21,8 +21,8 @@
 
 	.header {
 		width: 640px;
-		height: 60px;
-		padding-top: 30px;
+		height: 70px;
+		padding-top: 20px;
 
 		.title {
 			color: c.$title-color;
@@ -30,15 +30,14 @@
 			font-family: 'Star3000 Small';
 			font-size: 24pt;
 			position: absolute;
-			width: 250px;
+			margin-left: 35px;
+			width: 570px;
 
 			&.single {
-				left: 170px;
 				top: 25px;
 			}
 
 			&.dual {
-				left: 170px;
 
 				&>div {
 					position: absolute;
