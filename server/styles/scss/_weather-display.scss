@@ -1,5 +1,6 @@
 @use 'shared/_colors'as c;
 @use 'shared/_utils'as u;
+@use 'shared/_margins'as m;
 
 .weather-display {
 	width: 640px;
@@ -21,23 +22,31 @@
 
 	.header {
 		width: 640px;
-		height: 70px;
 		padding-top: 20px;
+		margin-left: m.$left-right;
+		margin-right: m.$left-right;
 
 		.title {
 			color: c.$title-color;
 			@include u.text-shadow(3px, 1.5px);
 			font-family: 'Star3000 Small';
 			font-size: 24pt;
-			position: absolute;
-			margin-left: 35px;
 			width: 570px;
 
 			&.single {
+				height: 70px;
 				top: 25px;
 			}
 
+			&.tall {
+				height: 50px;
+				margin-top: 20px;
+				font-family: 'Star3000';
+				text-align: center;
+			}
+
 			&.dual {
+				height: 70px;
 
 				&>div {
 					position: absolute;
@@ -52,19 +61,6 @@
 				}
 			}
 
-		}
-
-		.logo {
-			top: 30px;
-			left: 50px;
-			position: absolute;
-			z-index: 10;
-		}
-
-		.noaa-logo {
-			position: absolute;
-			top: 39px;
-			left: 356px;
 		}
 
 		.title.single {
@@ -87,9 +83,9 @@
 		}
 
 		&.has-box {
-			margin-left: 25px;
-			margin-right: 25px;
-			width: calc(100% - 50px);
+			margin-left: m.$left-right;
+			margin-right: m.$left-right;
+			width: calc(100% - 2 * m.$left-right);
 		}
 
 	}
@@ -97,15 +93,16 @@
 
 	.scroll {
 		@include u.text-shadow(3px, 1.5px);
-		width: 640px;
+		width: calc(640px - 2 * m.$left-right);
 		height: 70px;
 		overflow: hidden;
 		margin-top: 5px;
+		margin-left: m.$left-right;
+		margin-right: m.$left-right;
 
 		.fixed {
 			font-family: 'Star3000';
 			font-size: 24pt;
-			margin-left: 25px;
 		}
 
 		.date-time {
@@ -118,18 +115,17 @@
 			&.date,
 			&.time {
 				top: -10px;
+				width: 40%;
 			}
 
 			&.date {
 				float: left;
 				text-align: left;
-				margin-left: 25px;
 			}
 
 			&.time {
 				float: right;
 				text-align: right;
-				margin-right: 25px;
 			}
 
 			&.time::after {

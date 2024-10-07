@@ -20,7 +20,7 @@
 				font-family: 'Star3000 Small';
 				font-size: 24pt;
 				position: absolute;
-				top: -14px;
+				top: -10px;
 				@include u.text-shadow();
 			}
 
@@ -35,15 +35,15 @@
 		}
 
 		.temp {
-			left: 230px;
-		}
-
-		.weather {
 			left: 280px;
 		}
 
+		.weather {
+			left: 330px;
+		}
+
 		.wind {
-			left: 430px;
+			left: 480px;
 		}
 
 		.observation-lines {

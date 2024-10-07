@@ -8,9 +8,13 @@
 				<%-titleDual.bottom %>
 			</div>
 		</div>
-	<% } else { %>
-			<div class="title single">
+		<% } else if (locals?.titleTall) { %>
+			<div class="title tall">
 				<%-title %>
 			</div>
-	<% } %>
+		<% } else { %>
+				<div class="title single">
+					<%-title %>
+				</div>
+		<% } %>
 </div>
