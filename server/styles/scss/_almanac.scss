@@ -1,10 +1,6 @@
 @use 'shared/_colors'as c;
 @use 'shared/_utils'as u;
 
-#almanac-html.weather-display {
-	background-image: url('../images/BackGround3_1.png');
-}
-
 .weather-display .main.almanac {
 	font-family: 'Star3000';
 	font-size: 24pt;
