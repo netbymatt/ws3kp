@@ -1,32 +1,21 @@
 // display sun and moon data
-import { loadImg, preloadImg } from './utils/image.mjs';
 import { DateTime } from '../vendor/auto/luxon.mjs';
 import STATUS from './status.mjs';
 import WeatherDisplay from './weatherdisplay.mjs';
-import { registerDisplay } from './navigation.mjs';
+import { registerDisplay, timeZone } from './navigation.mjs';
 
 class Almanac extends WeatherDisplay {
 	constructor(navId, elemId) {
 		super(navId, elemId, 'Almanac', true);
 
-		// pre-load background images (returns promises)
-		this.backgroundImage0 = loadImg('images/BackGround3_1.png');
-
-		// preload the moon images
-		preloadImg(imageName('Full'));
-		preloadImg(imageName('Last'));
-		preloadImg(imageName('New'));
-		preloadImg(imageName('First'));
-
 		this.timing.totalScreens = 1;
 	}
 
-	async getData(_weatherParameters) {
-		const superResponse = super.getData(_weatherParameters);
-		const weatherParameters = _weatherParameters ?? this.weatherParameters;
+	async getData(weatherParameters, refresh) {
+		const superResponse = super.getData(weatherParameters, refresh);
 
 		// get sun/moon data
-		const { sun, moon } = this.calcSunMoonData(weatherParameters);
+		const { sun, moon } = this.calcSunMoonData(this.weatherParameters);
 
 		// store the data
 		this.data = {
@@ -123,10 +112,10 @@ class Almanac extends WeatherDisplay {
 		// sun and moon data
 		this.elem.querySelector('.day-1').innerHTML = Today.toLocaleString({ weekday: 'long' });
 		this.elem.querySelector('.day-2').innerHTML = Tomorrow.toLocaleString({ weekday: 'long' });
-		this.elem.querySelector('.rise-1').innerHTML = DateTime.fromJSDate(info.sun[0].sunrise).toLocaleString(DateTime.TIME_SIMPLE).toLowerCase();
-		this.elem.querySelector('.rise-2').innerHTML = DateTime.fromJSDate(info.sun[1].sunrise).toLocaleString(DateTime.TIME_SIMPLE).toLowerCase();
-		this.elem.querySelector('.set-1').innerHTML = DateTime.fromJSDate(info.sun[0].sunset).toLocaleString(DateTime.TIME_SIMPLE).toLowerCase();
-		this.elem.querySelector('.set-2').innerHTML = DateTime.fromJSDate(info.sun[1].sunset).toLocaleString(DateTime.TIME_SIMPLE).toLowerCase();
+		this.elem.querySelector('.rise-1').innerHTML = DateTime.fromJSDate(info.sun[0].sunrise).setZone(timeZone()).toLocaleString(DateTime.TIME_SIMPLE).toLowerCase();
+		this.elem.querySelector('.rise-2').innerHTML = DateTime.fromJSDate(info.sun[1].sunrise).setZone(timeZone()).toLocaleString(DateTime.TIME_SIMPLE).toLowerCase();
+		this.elem.querySelector('.set-1').innerHTML = DateTime.fromJSDate(info.sun[0].sunset).setZone(timeZone()).toLocaleString(DateTime.TIME_SIMPLE).toLowerCase();
+		this.elem.querySelector('.set-2').innerHTML = DateTime.fromJSDate(info.sun[1].sunset).setZone(timeZone()).toLocaleString(DateTime.TIME_SIMPLE).toLowerCase();
 
 		const days = info.moon.map((MoonPhase) => {
 			const fill = {};
@@ -135,12 +124,11 @@ class Almanac extends WeatherDisplay {
 
 			fill.date = date;
 			fill.type = MoonPhase.phase;
-			fill.icon = { type: 'img', src: imageName(MoonPhase.phase) };
 
-			return this.fillTemplate('day', fill);
+			return this.fillTemplate('times', fill);
 		});
 
-		const daysContainer = this.elem.querySelector('.moon .days');
+		const daysContainer = this.elem.querySelector('.moon');
 		daysContainer.innerHTML = '';
 		daysContainer.append(...days);
 
@@ -157,20 +145,6 @@ class Almanac extends WeatherDisplay {
 		});
 	}
 }
-
-const imageName = (type) => {
-	switch (type) {
-		case 'Full':
-			return 'images/icons/moon-phases/Full-Moon.gif';
-		case 'Last':
-			return 'images/icons/moon-phases/Last-Quarter.gif';
-		case 'New':
-			return 'images/icons/moon-phases/New-Moon.gif';
-		case 'First':
-		default:
-			return 'images/icons/moon-phases/First-Quarter.gif';
-	}
-};
 
 // register display
 const display = new Almanac(6, 'almanac');

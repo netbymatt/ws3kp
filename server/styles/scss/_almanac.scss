@@ -10,11 +10,15 @@
 	font-size: 24pt;
 	@include u.text-shadow();
 
-	.sun {
+	.heading {
+		text-align: center;
+	}
+
+	.sun,
+	.moon {
 		display: table;
 		margin-left: 50px;
 		height: 100px;
-
 
 		&>div {
 			display: table-row;
@@ -26,60 +30,28 @@
 		}
 
 		.days {
-			color: c.$column-header-text;
 			text-align: right;
-			top: -5px;
 
 			.day {
 				padding-right: 10px;
 			}
-
 		}
 
 		.times {
 			text-align: right;
 
+			.name {
+				width: 125px;
+			}
+
 			.sun-time {
 				width: 200px;
 			}
 
-			&.times-1 {
-				top: -10px;
-			}
-
-			&.times-2 {
-				top: -15px;
+			.large {
+				width: 400px;
 			}
 		}
+
 	}
-
-	.moon {
-		position: relative;
-		top: -10px;
-
-		padding: 0px 60px;
-
-		.title {
-			color: c.$column-header-text;
-		}
-
-		.day {
-			display: inline-block;
-			text-align: center;
-			width: 130px;
-
-			.icon {
-				// shadow in image make it look off center
-				padding-left: 10px;
-			}
-
-			.date {
-				position: relative;
-				top: -10px;
-			}
-		}
-	}
-
-
-
 }
