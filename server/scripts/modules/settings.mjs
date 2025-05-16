@@ -8,16 +8,31 @@ document.addEventListener('DOMContentLoaded', () => {
 const settings = { speed: { value: 1.0 } };
 
 const init = () => {
-	// create settings
-	settings.wide = new Setting('wide', 'Widescreen', 'boolean', false, wideScreenChange, true);
-	settings.kiosk = new Setting('kiosk', 'Kiosk', 'boolean', false, kioskChange, false);
-	settings.speed = new Setting('speed', 'Speed', 'select', 1.0, null, true, [
-		[0.5, 'Very Fast'],
-		[0.75, 'Fast'],
-		[1.0, 'Normal'],
-		[1.25, 'Slow'],
-		[1.5, 'Very Slow'],
-	]);
+	// create settings see setting.mjs for defaults
+	settings.wide = new Setting('wide', {
+		name: 'Widescreen',
+		defaultValue: false,
+		changeAction: wideScreenChange,
+		sticky: true,
+	});
+	settings.kiosk = new Setting('kiosk', {
+		name: 'Kiosk',
+		defaultValue: false,
+		changeAction: kioskChange,
+		sticky: false,
+	});
+	settings.speed = new Setting('speed', {
+		name: 'Speed',
+		type: 'select',
+		defaultValue: 1.0,
+		values: [
+			[0.5, 'Very Fast'],
+			[0.75, 'Fast'],
+			[1.0, 'Normal'],
+			[1.25, 'Slow'],
+			[1.5, 'Very Slow'],
+		],
+	});
 
 	// generate html objects
 	const settingHtml = Object.values(settings).map((d) => d.generate());

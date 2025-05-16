@@ -3,12 +3,15 @@ import noSleep from './modules/utils/nosleep.mjs';
 import {
 	message as navMessage, isPlaying, resize, resetStatuses, latLonReceived, stopAutoRefreshTimer, registerRefreshData,
 } from './modules/navigation.mjs';
+import progress from './modules/progress.mjs';
 import { round2 } from './modules/utils/units.mjs';
 import { parseQueryString } from './modules/share.mjs';
 import settings from './modules/settings.mjs';
+import AutoComplete from './modules/autocomplete.mjs';
 
 document.addEventListener('DOMContentLoaded', () => {
 	init();
+	getCustomCode();
 });
 
 const categories = [
@@ -50,13 +53,12 @@ const init = () => {
 	window.addEventListener('resize', fullScreenResizeCheck);
 	fullScreenResizeCheck.wasFull = false;
 
-	document.querySelector(TXT_ADDRESS_SELECTOR).addEventListener('keydown', (key) => { if (key.code === 'Enter') formSubmit(); });
-	document.querySelector('#btnGetLatLng').addEventListener('click', () => formSubmit());
+	document.querySelector('#btnGetLatLng').addEventListener('click', () => autoComplete.directFormSubmit());
 
 	document.addEventListener('keydown', documentKeydown);
 	document.addEventListener('touchmove', (e) => { if (document.fullscreenElement) e.preventDefault(); });
 
-	$(TXT_ADDRESS_SELECTOR).devbridgeAutocomplete({
+	const autoComplete = new AutoComplete(document.querySelector(TXT_ADDRESS_SELECTOR), {
 		serviceUrl: 'https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/suggest',
 		deferRequestBy: 300,
 		paramName: 'text',
@@ -76,15 +78,9 @@ const init = () => {
 		minChars: 3,
 		showNoSuggestionNotice: true,
 		noSuggestionNotice: 'No results found. Please try a different search string.',
-		onSelect(suggestion) { autocompleteOnSelect(suggestion, this); },
+		onSelect(suggestion) { autocompleteOnSelect(suggestion); },
 		width: 490,
 	});
-
-	const formSubmit = () => {
-		const ac = $(TXT_ADDRESS_SELECTOR).devbridgeAutocomplete();
-		if (ac.suggestions[0]) $(ac.suggestionsContainer.children[0]).trigger('click');
-		return false;
-	};
 
 	// attempt to parse the url parameters
 	const parsedParameters = parseQueryString();
@@ -133,10 +129,7 @@ const init = () => {
 	document.querySelector('#container').addEventListener('swiped-right', () => swipeCallBack('right'));
 };
 
-const autocompleteOnSelect = async (suggestion, elem) => {
-	// Do not auto get the same city twice.
-	if (elem.previousSuggestionValue === suggestion.value) return;
-
+const autocompleteOnSelect = async (suggestion) => {
 	const data = await json('https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find', {
 		data: {
 			text: suggestion.value,
@@ -254,14 +247,14 @@ const loadData = (_latLon, haveDataCallback) => {
 
 const swipeCallBack = (direction) => {
 	switch (direction) {
-	case 'left':
-		btnNavigateNextClick();
-		break;
+		case 'left':
+			btnNavigateNextClick();
+			break;
 
-	case 'right':
-	default:
-		btnNavigatePreviousClick();
-		break;
+		case 'right':
+		default:
+			btnNavigatePreviousClick();
+			break;
 	}
 };
 
@@ -312,41 +305,41 @@ const documentKeydown = (e) => {
 
 	if (document.fullscreenElement || document.activeElement === document.body) {
 		switch (key) {
-		case ' ': // Space
-			// don't scroll
-			e.preventDefault();
-			btnNavigatePlayClick();
-			return false;
+			case ' ': // Space
+				// don't scroll
+				e.preventDefault();
+				btnNavigatePlayClick();
+				return false;
 
-		case 'ArrowRight':
-		case 'PageDown':
-			// don't scroll
-			e.preventDefault();
-			btnNavigateNextClick();
-			return false;
+			case 'ArrowRight':
+			case 'PageDown':
+				// don't scroll
+				e.preventDefault();
+				btnNavigateNextClick();
+				return false;
 
-		case 'ArrowLeft':
-		case 'PageUp':
-			// don't scroll
-			e.preventDefault();
-			btnNavigatePreviousClick();
-			return false;
+			case 'ArrowLeft':
+			case 'PageUp':
+				// don't scroll
+				e.preventDefault();
+				btnNavigatePreviousClick();
+				return false;
 
-		case 'ArrowUp': // Home
-			e.preventDefault();
-			btnNavigateMenuClick();
-			return false;
+			case 'ArrowUp': // Home
+				e.preventDefault();
+				btnNavigateMenuClick();
+				return false;
 
-		case '0': // "O" Restart
-			btnNavigateRefreshClick();
-			return false;
+			case '0': // "O" Restart
+				btnNavigateRefreshClick();
+				return false;
 
-		case 'F':
-		case 'f':
-			btnFullScreenClick();
-			return false;
+			case 'F':
+			case 'f':
+				btnFullScreenClick();
+				return false;
 
-		default:
+			default:
 		}
 	}
 	return false;
@@ -412,4 +405,17 @@ const fullScreenResizeCheck = () => {
 
 	// store state of fullscreen element for next change detection
 	fullScreenResizeCheck.wasFull = !!document.fullscreenElement;
+};
+
+const getCustomCode = async () => {
+	const url = `scripts/custom.js?_=${progress.getVersion()}`;
+	// fetch the custom file and see if it returns a 200 status
+	const response = await fetch(url, { method: 'HEAD' });
+	if (response.ok) {
+		// add the script element to the page
+		const customElem = document.createElement('script');
+		customElem.src = url;
+		customElem.type = 'text/javascript';
+		document.body.append(customElem);
+	}
 };

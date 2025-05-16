@@ -106,23 +106,26 @@ body {
 .autocomplete-suggestions {
 	background-color: #ffffff;
 	border: 1px solid #000000;
+	position: absolute;
+	z-index: 9999;
 
 	@media (prefers-color-scheme: dark) {
 		background-color: #000000;
 	}
 
-	.autocomplete-suggestion {
+	div {
 		/*padding: 2px 5px;*/
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		font-size: 16pt;
+
+		&.selected {
+			background-color: #0000ff;
+			color: #ffffff;
+		}
 	}
 
-	.autocomplete-selected {
-		background-color: #0000ff;
-		color: #ffffff;
-	}
 }
 
 #divTwc {
@@ -134,7 +137,7 @@ body {
 
 	&.wide {
 		max-width: 854px;
-		// background: url(../images/BackGround1_1_wide.png);
+		// background: url(../images/backgrounds/1-wide.png);
 		;
 	}
 }
@@ -280,7 +283,7 @@ body {
 	width: 640px;
 	height: 480px;
 	// overflow: hidden;
-	background-image: url(../images/BackGround1_1.png);
+	background-image: url(../images/backgrounds/1.png);
 	transform-origin: 0 0;
 }
 
@@ -288,7 +291,7 @@ body {
 	padding-left: 107px;
 	padding-right: 107px;
 	background-repeat: no-repeat;
-	background: url(../images/BackGround1_1_wide.png)
+	background: url(../images/images/backgrounds/1-wide.png)
 }
 
 #divTwc:fullscreen #container,

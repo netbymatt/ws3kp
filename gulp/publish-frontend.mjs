@@ -61,8 +61,6 @@ const compressJsData = () => src(jsSourcesData)
 	.pipe(dest(RESOURCES_PATH));
 
 const jsVendorSources = [
-	'server/scripts/vendor/auto/jquery.js',
-	'server/scripts/vendor/jquery.autocomplete.min.js',
 	'server/scripts/vendor/auto/nosleep.js',
 	'server/scripts/vendor/auto/swiped-events.js',
 	'server/scripts/vendor/auto/suncalc.js',

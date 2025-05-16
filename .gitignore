@@ -1,4 +1,5 @@
 node_modules
+server/scripts/custom.js
 
 #dist folder
 dist/*

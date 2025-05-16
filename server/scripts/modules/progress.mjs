@@ -11,7 +11,7 @@ class Progress extends WeatherDisplay {
 		super(navId, elemId, '', false);
 
 		// pre-load background image (returns promise)
-		this.backgroundImage = loadImg('images/BackGround1_1.png');
+		this.backgroundImage = loadImg('images/backgrounds/1.png');
 
 		// disable any navigation timing
 		this.timing = false;
@@ -90,8 +90,14 @@ class Progress extends WeatherDisplay {
 			this.elem.classList.remove('show');
 		}
 	}
+
+	getVersion() {
+		return this.version;
+	}
 }
 
 // register our own display
 const progress = new Progress(-1, 'progress');
 registerProgress(progress);
+
+export default progress;

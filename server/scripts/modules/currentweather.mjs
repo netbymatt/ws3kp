@@ -4,7 +4,7 @@ import { loadImg, preloadImg } from './utils/image.mjs';
 import { json } from './utils/fetch.mjs';
 import { directionToNSEW } from './utils/calc.mjs';
 import { locationCleanup } from './utils/string.mjs';
-import { getWeatherIconFromIconLink } from './icons.mjs';
+import { getLargeIcon } from './icons.mjs';
 import WeatherDisplay from './weatherdisplay.mjs';
 import { registerDisplay } from './navigation.mjs';
 import {
@@ -18,7 +18,7 @@ class CurrentWeather extends WeatherDisplay {
 	constructor(navId, elemId) {
 		super(navId, elemId, 'Current Conditions', true);
 		// pre-load background image (returns promise)
-		this.backgroundImage = loadImg('images/BackGround1_1.png');
+		this.backgroundImage = loadImg('images/backgrounds/1.png');
 	}
 
 	async getData(_weatherParameters) {
@@ -81,7 +81,7 @@ class CurrentWeather extends WeatherDisplay {
 		if (!superResult) return;
 
 		// preload the icon
-		preloadImg(getWeatherIconFromIconLink(observations.features[0].properties.icon));
+		preloadImg(getLargeIcon(observations.features[0].properties.icon));
 		this.setStatus(STATUS.loaded);
 	}
 
@@ -175,7 +175,7 @@ const parseData = (data) => {
 	data.WindGust = Math.round(observations.windGust.value);
 	data.WindUnit = 'KPH';
 	data.Humidity = Math.round(observations.relativeHumidity.value);
-	data.Icon = getWeatherIconFromIconLink(observations.icon);
+	data.Icon = getLargeIcon(observations.icon);
 	data.PressureDirection = '';
 	data.TextConditions = observations.textDescription;
 
