@@ -8,7 +8,6 @@
 		"airbnb-base"
 	],
 	"globals": {
-		"TravelCities": "readonly",
 		"RegionalCities": "readonly",
 		"StationInfo": "readonly",
 		"SunCalc": "readonly",

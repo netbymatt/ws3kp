@@ -17,14 +17,12 @@ class ExtendedForecast extends WeatherDisplay {
 		this.timing.totalScreens = 2;
 	}
 
-	async getData(_weatherParameters) {
-		if (!super.getData(_weatherParameters)) return;
-		const weatherParameters = _weatherParameters ?? this.weatherParameters;
+	async getData(weatherParameters, refresh) {
+		if (!super.getData(weatherParameters, refresh)) return;
 
 		// request us or si units
-		let forecast;
 		try {
-			forecast = await json(weatherParameters.forecast, {
+			this.data = await json(this.weatherParameters.forecast, {
 				data: {
 					units: 'us',
 				},
@@ -34,11 +32,13 @@ class ExtendedForecast extends WeatherDisplay {
 		} catch (error) {
 			console.error('Unable to get extended forecast');
 			console.error(error.status, error.responseJSON);
-			this.setStatus(STATUS.failed);
-			return;
+			// if there's no previous data, fail
+			if (!this.data) {
+				this.setStatus(STATUS.failed);
+				return;
+			}
 		}
 		// we only get here if there was no error above
-		this.data = parse(forecast.properties.periods);
 		this.screenIndex = 0;
 		this.setStatus(STATUS.loaded);
 	}
@@ -48,7 +48,7 @@ class ExtendedForecast extends WeatherDisplay {
 
 		// determine bounds
 		// grab the first three or second set of three array elements
-		const forecast = this.data.slice(0 + 3 * this.screenIndex, 3 + this.screenIndex * 3);
+		const forecast = parse(this.data.properties.periods).slice(0 + 3 * this.screenIndex, 3 + this.screenIndex * 3);
 
 		// create each day template
 		const days = forecast.map((Day) => {

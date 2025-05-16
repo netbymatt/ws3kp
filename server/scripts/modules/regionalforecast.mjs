@@ -16,14 +16,16 @@ class RegionalForecast extends WeatherDisplay {
 		this.timing.totalScreens = 1;
 	}
 
-	async getData(_weatherParameters) {
-		if (!super.getData(_weatherParameters)) return;
-		const weatherParameters = _weatherParameters ?? this.weatherParameters;
+	async getData(weatherParameters, refresh) {
+		if (!super.getData(weatherParameters, refresh)) return;
+		// regional forecast implements a silent reload
+		// but it will not fall back to previously loaded data if data can not be loaded
+		// there are enough other cities available to populate the map sufficiently even if some do not load
 
 		// calculate distance to each city
 		const regionalCitiesDistances = RegionalCities.map((city) => ({
 			...city,
-			distance: calcDistance(city.lon, city.lat, weatherParameters.longitude, weatherParameters.latitude),
+			distance: calcDistance(city.lon, city.lat, this.weatherParameters.longitude, this.weatherParameters.latitude),
 		}));
 
 		// sort the regional cities by distance

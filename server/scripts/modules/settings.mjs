@@ -33,6 +33,19 @@ const init = () => {
 			[1.5, 'Very Slow'],
 		],
 	});
+	settings.refreshTime = new Setting('refreshTime', {
+		type: 'select',
+		defaultValue: 600_000,
+		sticky: false,
+		values: [
+			[30_000, 'TESTING'],
+			[300_000, '5 minutes'],
+			[600_000, '10 minutes'],
+			[900_000, '15 minutes'],
+			[1_800_000, '30 minutes'],
+		],
+		visible: false,
+	});
 
 	// generate html objects
 	const settingHtml = Object.values(settings).map((d) => d.generate());

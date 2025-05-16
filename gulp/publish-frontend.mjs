@@ -24,7 +24,6 @@ const cloudfront = new CloudFrontClient({ region: 'us-east-2' });
 const RESOURCES_PATH = './dist/resources';
 
 const jsSourcesData = [
-	'server/scripts/data/travelcities.js',
 	'server/scripts/data/regionalcities.js',
 	'server/scripts/data/stations.js',
 ];
