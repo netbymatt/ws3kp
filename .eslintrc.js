@@ -1,35 +1,31 @@
 module.exports = {
 	env: {
 		browser: true,
-		commonjs: true,
 		es6: true,
 		node: true,
-		jquery: true,
 	},
 	extends: [
 		'airbnb-base',
 	],
 	globals: {
-		Atomics: 'readonly',
-		SharedArrayBuffer: 'readonly',
-		StationInfo: 'readonly',
-		RegionalCities: 'readonly',
 		TravelCities: 'readonly',
-		NoSleep: 'readonly',
-		states: 'readonly',
+		RegionalCities: 'readonly',
+		StationInfo: 'readonly',
 		SunCalc: 'readonly',
-
+		NoSleep: 'readonly',
 	},
 	parserOptions: {
-		ecmaVersion: 2023,
+		ecmaVersion: 'latest',
+		sourceType: 'module',
 	},
-	plugins: [
-	],
+	plugins: [],
 	rules: {
 		indent: [
 			'error',
 			'tab',
-			{ SwitchCase: 1 },
+			{
+				SwitchCase: 1,
+			},
 		],
 		'no-tabs': 0,
 		'no-console': 0,
@@ -50,10 +46,33 @@ module.exports = {
 			'error',
 			{
 				groups: [
-					['&', '|', '^', '~', '<<', '>>', '>>>'],
-					['==', '!=', '===', '!==', '>', '>=', '<', '<='],
-					['&&', '||'],
-					['in', 'instanceof'],
+					[
+						'&',
+						'|',
+						'^',
+						'~',
+						'<<',
+						'>>',
+						'>>>',
+					],
+					[
+						'==',
+						'!=',
+						'===',
+						'!==',
+						'>',
+						'>=',
+						'<',
+						'<=',
+					],
+					[
+						'&&',
+						'||',
+					],
+					[
+						'in',
+						'instanceof',
+					],
 				],
 				allowSamePrecedence: true,
 			},

@@ -41,7 +41,7 @@
 			"skipFiles": [
 				"<node_internals>/**",
 			],
-			"program": "${workspaceFolder}/index.js",
+			"program": "${workspaceFolder}/index.mjs",
 		},
 		{
 			"type": "node",
@@ -50,20 +50,10 @@
 			"skipFiles": [
 				"<node_internals>/**",
 			],
-			"program": "${workspaceFolder}/index.js",
+			"program": "${workspaceFolder}/index.mjs",
 			"env": {
 				"DIST": "1"
 			}
-		},
-		{
-			"name": "Test",
-			"program": "${workspaceFolder}/tests/index.js",
-			"request": "launch",
-			"skipFiles": [
-				"<node_internals>/**"
-			],
-			"type": "node",
-			"outputCapture": "std"
 		},
 	],
 	"compounds": [

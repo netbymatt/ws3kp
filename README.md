@@ -26,7 +26,6 @@ cd ws4kp
 npm i
 node index.js
 ```
-
 ## Sharing a permalink (bookmarking)
 Selected displays, the forecast city and widescreen setting are sticky from one session to the next. However if you would like to share your exact configuration or bookmark it click the "Copy Permalink" (or get "Get Parmalink") near the bottom of the page. A URL will be copied to your clipboard with all of you selected displays and location (or copy it from the page if your browser doesn't support clipboard transfers directly). You can then share this link or add it to your bookmarks.
 
@@ -37,6 +36,13 @@ It's also possible to enter kiosk mode using a permalink. First generate a [Perm
 
 ## Customization
 A hook is provided as `/server/scripts/custom.js` to allow customizations to your own fork of this project, without accidentally pushing your customizations back upstream to the git repository. An sample file is provided at `/server/scripts/custom.sample.js` and should be renamed to `custom.js` activate it.
+
+## Serving static files
+The app can be served as a static set of files on any web server. Run the provided gulp task to create a set of static distribution files:
+```
+npm run buildDist
+```
+The resulting files will be in the /dist folder in the root of the project. These can then be uploaded to a web server for hosting, no server-side scripting is required.
 
 ## Issue reporting and feature requests
 

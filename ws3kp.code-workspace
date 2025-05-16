@@ -14,8 +14,12 @@
 			"**/vendor": true,
 			"dist/**": true
 		},
+		"cSpell.enabledFileTypes": {
+			"markdown": true,
+			"JavaScript": true
+		},
 		"cSpell.enabled": true,
-		"cSpell.words": [
+		"cSpell.ignoreWords": [
 			"'storm",
 			"arcgis",
 			"Battaglia",
@@ -54,9 +58,8 @@
 		"files.exclude": {},
 		"files.eol": "\n",
 		"editor.formatOnSave": true,
-    "editor.codeActionsOnSave": {
+		"editor.codeActionsOnSave": {
 			"source.fixAll.eslint": "explicit"
 		}
-
 	},
 }

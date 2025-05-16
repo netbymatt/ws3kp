@@ -1,4 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
+import 'dotenv/config';
 import {
 	src, dest, series, parallel,
 } from 'gulp';
@@ -6,9 +7,9 @@ import concat from 'gulp-concat';
 import terser from 'gulp-terser';
 import ejs from 'gulp-ejs';
 import rename from 'gulp-rename';
-import htmlmin from 'gulp-htmlmin';
+import htmlmin from 'gulp-html-minifier-terser';
 import { deleteAsync } from 'del';
-import s3Upload from 'gulp-s3-upload';
+import s3Upload from 'gulp-s3-uploader';
 import webpack from 'webpack-stream';
 import TerserPlugin from 'terser-webpack-plugin';
 import { readFile } from 'fs/promises';
@@ -132,7 +133,7 @@ const uploadSources = [
 ];
 const upload = () => src(uploadSources, { base: './dist' })
 	.pipe(s3({
-		Bucket: 'weatherstar3000',
+		Bucket: process.env.BUCKET,
 		StorageClass: 'STANDARD',
 		maps: {
 			CacheControl: (keyname) => {
@@ -149,13 +150,13 @@ const imageSources = [
 const uploadImages = () => src(imageSources, { base: './server', encoding: false })
 	.pipe(
 		s3({
-			Bucket: 'weatherstar3000',
+			Bucket: process.env.BUCKET,
 			StorageClass: 'STANDARD',
 		}),
 	);
 
 const invalidate = () => cloudfront.send(new CreateInvalidationCommand({
-	DistributionId: 'E3CXPXY0XH4VUO',
+	DistributionId: process.env.DISTRIBUTION_ID,
 	InvalidationBatch: {
 		CallerReference: (new Date()).toLocaleString(),
 		Paths: {
@@ -172,3 +173,7 @@ const buildDist = series(clean, parallel(buildJs, compressJsData, compressJsVend
 const publishFrontend = series(buildDist, uploadImages, upload, invalidate);
 
 export default publishFrontend;
+
+export {
+	buildDist,
+};

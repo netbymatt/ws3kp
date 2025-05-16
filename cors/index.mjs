@@ -1,13 +1,13 @@
 // pass through api requests
 
 // http(s) modules
-const https = require('https');
+import https from 'https';
 
 // url parsing
-const queryString = require('querystring');
+import queryString from 'querystring';
 
 // return an express router
-module.exports = (req, res) => {
+const cors = (req, res) => {
 	// add out-going headers
 	const headers = {};
 	headers['user-agent'] = '(WeatherStar 4000+, ws4000@netbymatt.com)';
@@ -41,3 +41,5 @@ module.exports = (req, res) => {
 		console.error(e);
 	});
 };
+
+export default cors;
