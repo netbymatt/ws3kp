@@ -121,7 +121,7 @@ const copyOtherFiles = () => src(otherFiles, { base: 'server/' })
 
 const s3 = s3Upload({
 	useIAM: true,
-	region: 'us-east-2',
+	region: 'us-east-1',
 });
 const uploadSources = [
 	'dist/**',
