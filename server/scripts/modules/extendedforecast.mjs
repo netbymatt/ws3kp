@@ -84,7 +84,7 @@ const parse = (fullForecast) => {
 
 	const dates = Days.map((shift) => {
 		const date = DateTime.local().startOf('day').plus({ days: shift });
-		return date.toLocaleString({ weekday: 'short' });
+		return date.toLocaleString({ weekday: 'long' });
 	});
 
 	// track the destination forecast index

@@ -23,50 +23,33 @@
 
 		.date {
 			text-transform: uppercase;
-			text-align: center;
 			color: c.$title-color;
 		}
 
 		.condition {
-			text-align: center;
-			height: 74px;
+			height: 95px;
 			margin-top: 10px;
-		}
-
-		.icon {
-			text-align: center;
-			height: 75px;
-
-			img {
-				max-height: 75px;
-			}
 		}
 
 		.temperatures {
 			width: 100%;
-			margin-top: 5px;
+			margin-top: 25px;
 
 			.temperature-block {
-				display: inline-block;
-				width: 44%;
 				vertical-align: top;
 
-				>div {
-					text-align: center;
+				div {
+					width: 44%;
+				}
+
+				.label {
+					float: left;
 				}
 
 				.value {
-					font-family: 'Star3000 Large';
-					margin-top: 4px;
+					float: right;
 				}
 
-				&.lo .label {
-					color: c.$extended-low;
-				}
-
-				&.hi .label {
-					color: c.$title-color;
-				}
 			}
 		}
 	}

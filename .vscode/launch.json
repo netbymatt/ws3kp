@@ -5,18 +5,6 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"args": [
-				"publishFrontend"
-			],
-			"name": "Gulp publishFrontend",
-			"program": "${workspaceFolder}/node_modules/gulp/bin/gulp.js",
-			"request": "launch",
-			"skipFiles": [
-				"<node_internals>/**"
-			],
-			"type": "node"
-		},
-		{
 			"name": "Frontend",
 			"request": "launch",
 			"type": "chrome",
