@@ -19,7 +19,7 @@ import { CloudFrontClient, CreateInvalidationCommand } from '@aws-sdk/client-clo
 
 const clean = () => deleteAsync(['./dist**']);
 
-const cloudfront = new CloudFrontClient({ region: 'us-east-2' });
+const cloudfront = new CloudFrontClient({ region: process.env.CLOUDFRONT_REGION });
 
 const RESOURCES_PATH = './dist/resources';
 
@@ -121,7 +121,7 @@ const copyOtherFiles = () => src(otherFiles, { base: 'server/' })
 
 const s3 = s3Upload({
 	useIAM: true,
-	region: 'us-east-2',
+	region: process.env.S3_REGION,
 });
 const uploadSources = [
 	'dist/**',
