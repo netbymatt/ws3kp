@@ -16,6 +16,7 @@
 		margin: 0px 15px;
 		font-family: 'Star3000';
 		font-size: 24pt;
+		vertical-align: top;
 
 		.date {
 			text-transform: uppercase;
@@ -33,6 +34,8 @@
 
 			.temperature-block {
 				vertical-align: top;
+				// clear-fix
+				clear: both;
 
 				div {
 					width: 44%;

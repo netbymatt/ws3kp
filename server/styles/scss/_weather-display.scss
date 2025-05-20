@@ -103,6 +103,8 @@
 		.fixed {
 			font-family: 'Star3000';
 			font-size: 24pt;
+			max-height: 40px;
+			overflow: hidden;
 		}
 
 		.date-time {
