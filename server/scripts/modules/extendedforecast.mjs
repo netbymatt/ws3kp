@@ -4,8 +4,6 @@
 import STATUS from './status.mjs';
 import { json } from './utils/fetch.mjs';
 import { DateTime } from '../vendor/auto/luxon.mjs';
-import { getLargeIcon } from './icons.mjs';
-import { preloadImg } from './utils/image.mjs';
 import WeatherDisplay from './weatherdisplay.mjs';
 import { registerDisplay } from './navigation.mjs';
 
@@ -53,7 +51,6 @@ class ExtendedForecast extends WeatherDisplay {
 		// create each day template
 		const days = forecast.map((Day) => {
 			const fill = {
-				icon: { type: 'img', src: Day.icon },
 				condition: Day.text,
 				date: Day.dayName,
 			};
@@ -94,18 +91,14 @@ const parse = (fullForecast) => {
 		// create the destination object if necessary
 		if (!forecast[destIndex]) {
 			forecast.push({
-				dayName: '', low: undefined, high: undefined, text: undefined, icon: undefined,
+				dayName: '', low: undefined, high: undefined, text: undefined,
 			});
 		}
 		// get the object to modify/populate
 		const fDay = forecast[destIndex];
 		// high temperature will always be last in the source array so it will overwrite the low values assigned below
-		fDay.icon = getLargeIcon(period.icon);
 		fDay.text = shortenExtendedForecastText(period.shortForecast);
 		fDay.dayName = dates[destIndex];
-
-		// preload the icon
-		preloadImg(fDay.icon);
 
 		if (period.isDaytime) {
 			// day time is the high temperature

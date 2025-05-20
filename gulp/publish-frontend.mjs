@@ -75,7 +75,6 @@ const mjsSources = [
 	'server/scripts/modules/hazards.mjs',
 	'server/scripts/modules/currentweather.mjs',
 	'server/scripts/modules/almanac.mjs',
-	'server/scripts/modules/icons.mjs',
 	'server/scripts/modules/extendedforecast.mjs',
 	'server/scripts/modules/latestobservations.mjs',
 	'server/scripts/modules/localforecast.mjs',
@@ -142,6 +141,7 @@ const upload = () => src(uploadSources, { base: './dist' })
 const imageSources = [
 	'server/fonts/**',
 	'server/images/**',
+	'!server/images/gimp/**',
 ];
 const uploadImages = () => src(imageSources, { base: './server', encoding: false })
 	.pipe(

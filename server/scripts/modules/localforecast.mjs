@@ -88,7 +88,7 @@ class LocalForecast extends WeatherDisplay {
 
 		// update the title
 		const titleElem = this.elem.querySelector('.header .title.single');
-		if (this.screenIndex === 0) {
+		if (this.screenIndex === 0 && this.weatherParameters.zoneId) {
 			titleElem.textContent = `${this.originalTitle} -- Zone ${this.weatherParameters.zoneId}`;
 		} else {
 			titleElem.textContent = 'Nat\'l Weather Service Forecast';

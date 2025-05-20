@@ -105,6 +105,14 @@
 			font-size: 24pt;
 			max-height: 40px;
 			overflow: hidden;
+
+			.scroll-area {
+				text-wrap: nowrap;
+				position: relative;
+				// the following added by js code as it is dependent on the content of the element
+				// transition: left (x)s;
+				// left: calc((elem width) - 640px);
+			}
 		}
 
 		.date-time {
