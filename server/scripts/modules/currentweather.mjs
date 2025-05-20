@@ -1,10 +1,8 @@
 // current weather conditions display
 import STATUS from './status.mjs';
-import { loadImg, preloadImg } from './utils/image.mjs';
 import { json } from './utils/fetch.mjs';
 import { directionToNSEW } from './utils/calc.mjs';
 import { locationCleanup } from './utils/string.mjs';
-import { getLargeIcon } from './icons.mjs';
 import WeatherDisplay from './weatherdisplay.mjs';
 import { registerDisplay } from './navigation.mjs';
 import {
@@ -17,8 +15,6 @@ const skipStations = ['U', 'C', 'H', 'W', 'Y', 'T', 'S', 'M', 'O', 'L', 'A', 'F'
 class CurrentWeather extends WeatherDisplay {
 	constructor(navId, elemId) {
 		super(navId, elemId, 'Current Conditions', true);
-		// pre-load background image (returns promise)
-		this.backgroundImage = loadImg('images/backgrounds/1.png');
 	}
 
 	async getData(weatherParameters, refresh) {
@@ -56,8 +52,7 @@ class CurrentWeather extends WeatherDisplay {
 				if (observations.features[0].properties.temperature.value === null
 					|| observations.features[0].properties.windSpeed.value === null
 					|| observations.features[0].properties.textDescription === null
-					|| observations.features[0].properties.textDescription === ''
-					|| observations.features[0].properties.icon === null) {
+					|| observations.features[0].properties.textDescription === '') {
 					observations = undefined;
 					throw new Error(`Unable to get observations: ${station.properties.stationIdentifier}, trying next station`);
 				}
@@ -81,8 +76,6 @@ class CurrentWeather extends WeatherDisplay {
 		// stop here if we're disabled
 		if (!superResult) return;
 
-		// preload the icon
-		preloadImg(getLargeIcon(observations.features[0].properties.icon));
 		this.setStatus(STATUS.loaded);
 	}
 
@@ -104,7 +97,6 @@ class CurrentWeather extends WeatherDisplay {
 			ceiling: (this.data.Ceiling === 0 ? 'Unlimited' : this.data.Ceiling + this.data.CeilingUnit),
 			visibility: this.data.Visibility + this.data.VisibilityUnit,
 			pressure: `${this.data.Pressure} ${this.data.PressureDirection}`,
-			icon: { type: 'img', src: this.data.Icon },
 		};
 
 		if (this.data.WindGust) fill['wind-gusts'] = `Gusts to ${this.data.WindGust}`;
@@ -176,7 +168,6 @@ const parseData = (data) => {
 	data.WindGust = Math.round(observations.windGust.value);
 	data.WindUnit = 'KPH';
 	data.Humidity = Math.round(observations.relativeHumidity.value);
-	data.Icon = getLargeIcon(observations.icon);
 	data.PressureDirection = '';
 	data.TextConditions = observations.textDescription;
 

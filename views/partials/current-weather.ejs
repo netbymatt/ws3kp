@@ -1,42 +1,39 @@
-<%- include('header.ejs', {titleDual:{ top: 'Current' , bottom: 'Conditions' }}) %>
-	<div class="main has-scroll has-box current-weather">
+	<div class="main has-scroll current-weather">
 		<div class="weather template">
-			<div class="left col">
-				<div class="temp center"></div>
-				<div class="condition center"></div>
-				<div class="icon center"><img src="" /></div>
-				<div class="wind-container">
-					<div class="wind-label">Wind:</div>
-					<div class="wind"></div>
-				</div>
-				<div class="wind-gusts"></div>
+			<div>
+				Conditions at
+				<span class="location"></span>
 			</div>
-			<div class="right col">
-				<div class="location"></div>
-				<div class="row">
-					<div class="label">Humidity:</div>
-					<div class="humidity value"></div>
-				</div>
-				<div class="row">
-					<div class="label">Dewpoint:</div>
-					<div class="dewpoint value"></div>
-				</div>
-				<div class="row">
-					<div class="label">Ceiling:</div>
-					<div class="ceiling value"></div>
-				</div>
-				<div class="row">
-					<div class="label">Visibility:</div>
-					<div class="visibility value"></div>
-				</div>
-				<div class="row">
-					<div class="label">Pressure:</div>
-					<div class="pressure value"></div>
-				</div>
-				<div class="row">
-					<div class="heat-index-label label"></div>
-					<div class="heat-index value"></div>
-				</div>
+			<div>
+				<span class="condition"></span>
+			</div>
+			<div>
+				Temperature:
+				<span class="temp"></span>
+			</div>
+			<div>
+				Humidity:
+				<span class="humidity"></span>
+				Dewpoint:
+				<span class="dewpoint"></span>
+			</div>
+			<div>
+				Barometric Pressure:
+				<span class="pressure"></span>
+			</div>
+			<div>
+				Wind:
+				<span class="wind"></span>
+			</div>
+			<div>
+				Visib:
+				<span class="visibility"></span>
+				Ceiling:
+				<span class="ceiling"></span>
+			</div>
+			<div>
+				<span class="heat-index-label"></span>
+				<span class="heat-index"></span>
 			</div>
 		</div>
 	</div>
