@@ -148,6 +148,9 @@ const uploadImages = () => src(imageSources, { base: './server', encoding: false
 		s3({
 			Bucket: process.env.BUCKET,
 			StorageClass: 'STANDARD',
+			maps: {
+				CacheControl: () => 'max-age=2592000', // 1 month
+			},
 		}),
 	);
 
@@ -172,4 +175,5 @@ export default publishFrontend;
 
 export {
 	buildDist,
+	invalidate,
 };
