@@ -33,7 +33,6 @@ class Hazards extends WeatherDisplay {
 			// get the forecast
 			const url = new URL('https://api.weather.gov/alerts/active');
 			url.searchParams.append('point', `${this.weatherParameters.latitude},${this.weatherParameters.longitude}`);
-			url.searchParams.append('limit', 5);
 			const alerts = await json(url, { retryCount: 3, stillWaiting: () => this.stillWaiting() });
 			const unsortedAlerts = alerts.features ?? [];
 			const sortedAlerts = unsortedAlerts.sort((a, b) => (hazardLevels[b.properties.severity] ?? 0) - (hazardLevels[a.properties.severity] ?? 0));
