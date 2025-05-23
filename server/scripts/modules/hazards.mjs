@@ -34,7 +34,8 @@ class Hazards extends WeatherDisplay {
 			const url = new URL('https://api.weather.gov/alerts/active');
 			url.searchParams.append('point', `${this.weatherParameters.latitude},${this.weatherParameters.longitude}`);
 			const alerts = await json(url, { retryCount: 3, stillWaiting: () => this.stillWaiting() });
-			const unsortedAlerts = alerts.features ?? [];
+			const allUnsortedAlerts = alerts.features ?? [];
+			const unsortedAlerts = allUnsortedAlerts.slice(0, 5);
 			const sortedAlerts = unsortedAlerts.sort((a, b) => (hazardLevels[b.properties.severity] ?? 0) - (hazardLevels[a.properties.severity] ?? 0));
 			const filteredAlerts = sortedAlerts.filter((hazard) => hazard.properties.severity !== 'Unknown');
 			this.data = filteredAlerts;
