@@ -26,6 +26,29 @@ cd ws4kp
 npm i
 node index.js
 ```
+
+### Docker Deployments
+
+To run via Docker:
+
+```bash
+docker run -p 8083:8083 ghcr.io/netbymatt/ws3kp
+```
+
+To run via Docker Compose:
+
+```yaml
+---
+services:
+  ws3kp:
+    image: ghcr.io/netbymatt/ws3kp
+    container_name: ws3kp
+    environment:
+    ports:
+      - 8083:8083 # change the first 8083 to meet your local network needs
+    restart: unless-stopped
+```
+
 ## Sharing a permalink (bookmarking)
 Selected displays, the forecast city and widescreen setting are sticky from one session to the next. However if you would like to share your exact configuration or bookmark it click the "Copy Permalink" (or get "Get Parmalink") near the bottom of the page. A URL will be copied to your clipboard with all of you selected displays and location (or copy it from the page if your browser doesn't support clipboard transfers directly). You can then share this link or add it to your bookmarks.
 
