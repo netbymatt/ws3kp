@@ -2,16 +2,12 @@
 
 import express from 'express';
 import fs from 'fs';
-import corsPassThru from './cors/index.mjs';
 
 const app = express();
 const port = process.env.WS3KP_PORT ?? 8083;
 
 // template engine
 app.set('view engine', 'ejs');
-
-// cors pass-thru to api.weather.gov
-app.get('/stations/*station', corsPassThru);
 
 // version
 const { version } = JSON.parse(fs.readFileSync('package.json'));
