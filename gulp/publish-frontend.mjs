@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import 'dotenv/config';
 import {
 	src, dest, series, parallel,
@@ -118,13 +117,23 @@ const otherFiles = [
 const copyOtherFiles = () => src(otherFiles, { base: 'server/' })
 	.pipe(dest('./dist'));
 
+const imageSources = [
+	'server/fonts/**',
+	'server/images/**',
+	'!server/images/gimp/**',
+];
+
+const copyImageSources = () => src(imageSources, { base: './server', encoding: false })
+	.pipe(dest('./dist'));
+
 const s3 = s3Upload({
 	useIAM: true,
 	region: process.env.S3_REGION,
 });
 const uploadSources = [
 	'dist/**',
-	'!dist/**/*.map',
+	'!dist/images/**/*',
+	'!dist/fonts/**/*',
 ];
 const upload = () => src(uploadSources, { base: './dist' })
 	.pipe(s3({
@@ -138,11 +147,6 @@ const upload = () => src(uploadSources, { base: './dist' })
 		},
 	}));
 
-const imageSources = [
-	'server/fonts/**',
-	'server/images/**',
-	'!server/images/gimp/**',
-];
 const uploadImages = () => src(imageSources, { base: './server', encoding: false })
 	.pipe(
 		s3({
@@ -165,7 +169,7 @@ const invalidate = () => cloudfront.send(new CreateInvalidationCommand({
 	},
 }));
 
-const buildDist = series(clean, parallel(buildJs, compressJsData, compressJsVendor, copyCss, compressHtml, copyOtherFiles));
+const buildDist = series(clean, parallel(buildJs, compressJsData, compressJsVendor, copyCss, compressHtml, copyImageSources, copyOtherFiles));
 
 // upload_images could be in parallel with upload, but _images logs a lot and has little changes
 // by running upload last the majority of the changes will be at the bottom of the log for easy viewing

@@ -42,9 +42,6 @@ const geoip = (req, res) => {
 // debugging
 if (process.env?.DIST === '1') {
 	// distribution
-	app.use('/images', express.static('./server/images'));
-	app.use('/fonts', express.static('./server/fonts'));
-	app.use('/scripts', express.static('./server/scripts'));
 	app.use('/', express.static('./dist'));
 	app.use('/geoip', geoip);
 } else {
